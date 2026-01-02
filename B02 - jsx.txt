@@ -1,0 +1,82 @@
+1. JSX Là Gì?
+JSX là một cú pháp mở rộng (syntax extension) cho JavaScript, cho phép bạn viết các mã trông giống như HTML ngay bên trong file JavaScript
+. Mục đích là để gom logic hiển thị (markup) và logic xử lý (JS) vào cùng một nơi gọi là "Component"
+.
+2. So Sánh: HTML vs. JSX
+Điểm khác biệt lớn nhất là JSX nghiêm ngặt hơn và tuân thủ quy tắc đặt tên biến của JavaScript (camelCase).
+
+| ĐẶC ĐIỂM      | HTML THUẦN (Cũ)        | JSX (React)                  | LÝ DO / GHI CHÚ                          |
+|---------------|------------------------|------------------------------|------------------------------------------|
+| Class CSS     | <div class="box">      | <div className="box">        | "class" là từ khóa dành riêng của JS [4]|
+| Sự kiện       | onclick="run()"        | onClick={run}                | Dùng camelCase và truyền hàm trực tiếp   |
+| Thẻ đóng      | <br>, <img src="...">  | <br />, <img src="..." />    | JSX bắt buộc phải đóng mọi thẻ [5]      |
+| Style         | style="color: red"     | style={{ color: 'red' }}     | Style trong JSX là một Object JS         |
+| Chèn biến     | (Không hỗ trợ)         | <h1>{tenBien}</h1>           | Dùng ngoặc nhọn {} để nhúng JS [1]      |
+
+3. Ví Dụ Mã Nguồn Hoàn Chỉnh (Copy đoạn này)
+Dưới đây là một ví dụ đầy đủ minh họa cách nhúng biến, xử lý điều kiện và style trong JSX.
+
+// File: UserProfile.jsx
+
+function UserProfile() {
+  // 1. Dữ liệu JavaScript
+  const user = {
+    name: "Nguyễn Văn A",
+    avatarUrl: "https://i.imgur.com/yXOvdOSs.jpg",
+    isOnline: true
+  };
+
+  // 2. Logic hiển thị (Markup + Logic)
+  return (
+    <div className="card-profile">
+      {/* Hiển thị ảnh: phải đóng thẻ /> */}
+      <img 
+        src={user.avatarUrl} 
+        alt={user.name} 
+        className="avatar" 
+      />
+      
+      {/* Nhúng biến bằng {} */}
+      <h2>Xin chào, {user.name}</h2>
+      
+      {/* Kiểm tra điều kiện (Toán tử 3 ngôi) */}
+      <p style={{ color: user.isOnline ? 'green' : 'gray' }}>
+        Trạng thái: {user.isOnline ? "Đang online" : "Ngoại tuyến"}
+      </p>
+      
+      {/* Sự kiện onClick dùng camelCase */}
+      <button onClick={() => alert("Đã kết bạn!")}>
+        Kết bạn
+      </button>
+    </div>
+  );
+}
+
+export default UserProfile;
+
+4. Ba Quy Tắc "Vàng" Của JSX (Cần nhớ kỹ)
+Để JSX hoạt động, bạn không được viết tùy tiện như HTML mà phải tuân thủ 3 luật sau
+:
+1. Trả về một phần tử gốc duy nhất (Single Root Element):
+    ◦ Sai: return ( <h1>Tiêu đề</h1> <p>Nội dung</p> ) (Hai thẻ rời rạc).
+    ◦ Đúng: Phải bọc chúng lại. Nếu không muốn sinh ra thẻ div thừa, hãy dùng Fragment <> ... </>
+.
+2. Đóng tất cả các thẻ (Close All Tags):
+    ◦ Các thẻ đơn như <img>, <input>, <br> bắt buộc phải có dấu gạch chéo kết thúc: <img />
+.
+3. Dùng camelCase cho thuộc tính:
+    ◦ Viết strokeWidth thay vì stroke-width, className thay vì class (trừ các thuộc tính aria-* và data-* vẫn giữ nguyên dấu gạch ngang)
+.
+5. Cơ Chế Hoạt Động (Under the Hood)
+Trình duyệt không hiểu JSX. Trước khi chạy, công cụ Build (như Babel hoặc Vite) sẽ chuyển đổi JSX thành JavaScript thuần.
+• Bạn viết JSX:
+• Trình duyệt nhận được (Sau khi biên dịch):
+• Giải thích: Mỗi thẻ JSX thực chất là một lời gọi hàm React.createElement() tạo ra một Object JavaScript
+.
+6. Lưu ý về đuôi file (.js vs .jsx)
+Khi lưu file chứa mã JSX, bạn cần chú ý quy ước của công cụ bạn đang dùng:
+• Dùng .jsx (Khuyên dùng): Bắt buộc đối với các dự án hiện đại dùng Vite. Vite dùng công cụ esbuild rất nhanh nhưng yêu cầu file chứa JSX phải có đuôi .jsx mới chịu biên dịch
+. Ngoài ra, nó giúp trình soạn thảo code (VS Code) gợi ý code tốt hơn
+.
+• Dùng .js: Vẫn hoạt động tốt trên các dự án cũ dùng "Create React App" (Webpack), nhưng không khuyến khích cho dự án mới
+.

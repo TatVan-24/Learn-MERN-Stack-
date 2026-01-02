@@ -1,0 +1,29 @@
+thuat ngu: create-ract-app
+- why vite?
+    + 
+
+    Ctrl + C de tat ung dung
+    - cau lenh  
+        
+        yarn --host
+        npm run dev
+Script/package.json: 
+    + dev: "vite": day la noi thuc hien lenh "yarn dev" 
+    + dev: "vite --host": neu sua thua "vite --host" thi khi thuc hien cau lenh "yarn dev" thi se tuong ung voi "yarn --host"
+    + build: "vite build"
+    + preview: "vite preview"
+    ==> dieu kien la build se duoc chay truoc preview, de build xong he thong 
+        va preview truoc khi deploy
+vite.config.js
+    + them dong "build: "./"" ~~ build: "vite build"
+
+yarn.lock
+
+App.jsx
+
+main.jsx:
+    + createRoot(document.getElementById('root')).render(..) thi root chinh la file index.html
+    ==> khi thuc hien cau lenh, thi main se tim root trong file index.html voi the: <div id="root"></div>
+        sau do chay render de chay file App.jsx
+
+folder assets: dung de chua cac file anh, video...
