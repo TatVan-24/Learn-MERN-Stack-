@@ -21,10 +21,10 @@ function App() {
    <br></br>
     <HomeIcon color="primary" />
     <HomeIcon color="secondary" />
-    <HomeIcon color="success" />
+    {/* <HomeIcon color="success" />
     <HomeIcon color="action" />
     <HomeIcon color="disabled" />
-    <HomeIcon sx={{ color: pink[500] }} />
+    <HomeIcon sx={{ color: pink[500] }} /> */}
     </>
   )
 }
