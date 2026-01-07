@@ -1,0 +1,124 @@
+============================================================
+           TỔNG HỢP KIẾN THỨC TOÀN DIỆN VỀ ESLINT
+============================================================
+
+1. ESLINT LÀ GÌ?
+- ESLint là một STATIC ANALYSIS TOOL (công cụ phân tích mã tĩnh) dành cho JavaScript.
+- CHỨC NĂNG: Quét mã nguồn để tìm các "mô hình" (patterns) sai hoặc lỗi tiềm ẩn mà KHÔNG CẦN CHẠY CODE.
+- MỤC ĐÍCH: Giúp mã nguồn NHẤT QUÁN (Consistent), TRÁNH LỖI (Bugs), và nâng cao chất lượng code.
+- ĐẶC ĐIỂM: "Pluggable" - Mọi quy tắc (rule) đều là một plugin độc lập có thể tùy chỉnh.
+
+------------------------------------------------------------
+2. HỆ THỐNG CẤU HÌNH: CŨ (.eslintrc) vs MỚI (Flat Config)
+- FLAT CONFIG (eslint.config.js): Là chuẩn hiện đại nhất (ESLint v9+). File này là một JavaScript Module thực thụ, linh hoạt và mạnh mẽ.
+- LEGACY CONFIG (.eslintrc.cjs): Là chuẩn cũ hơn nhưng vô cùng ổn định, hiện vẫn được ưu tiên trong nhiều dự án MERN Stack sử dụng Node v18.
+
+------------------------------------------------------------
+3. CÀI ĐẶT VÀ SỬ DỤNG
+- Yêu cầu: Node.js ^18.18.0 trở lên.
+- KHỞI TẠO: Chạy lệnh dưới đây để tự động tạo cấu hình:
+  npm init @eslint/config@latest
+- CHẠY KIỂM TRA: 
+  npx eslint yourfile.js
+
+------------------------------------------------------------
+4. GIẢI THÍCH CHI TIẾT FILE CẤU HÌNH THỰC TẾ (.eslintrc.cjs)
+
+A. MÔI TRƯỜNG & PHIÊN BẢN (Environment & Parser)
+- env: Khai báo nơi code sẽ chạy (Browser, Node, ES2020) để ESLint không báo lỗi biến toàn cục.
+- parserOptions: Thiết lập cách đọc code (SourceType: Module cho phép dùng import/export).
+
+B. BỘ QUY TẮC MỞ RỘNG (Extends)
+- eslint:recommended: Các luật cơ bản của JS.
+- plugin:react/recommended: Các luật tiêu chuẩn cho React.
+- plugin:react-hooks/recommended: Kiểm tra quy tắc nghiêm ngặt của React Hooks.
+
+C. CÁC MỨC ĐỘ BÁO LỖI (Rule Severities)
+- "off" hoặc 0: Tắt quy tắc này.
+- "warn" hoặc 1: CẢNH BÁO VÀNG (Code vẫn chạy nhưng cần lưu ý).
+- "error" hoặc 2: LỖI ĐỎ (Dừng quy trình Build, bắt buộc phải sửa).
+
+D. GIẢI THÍCH CÁC RULES QUAN TRỌNG TRONG FILE CỦA BẠN:
+- 'react-refresh/only-export-components': 'warn' -> Đảm bảo Hot Reload hoạt động chuẩn.
+- 'no-console': 1 -> Cảnh báo nếu dùng console.log trong code.
+- 'quotes': ['error', 'single'] -> Bắt buộc dùng NHÁY ĐƠN, nháy đôi sẽ báo lỗi đỏ.
+- 'semi': [1, 'never'] -> Yêu cầu KHÔNG dùng dấu chấm phẩy.
+- 'indent': ['warn', 2] -> Yêu cầu thụt lề ĐÚNG 2 DẤU CÁCH.
+- 'object-curly-spacing': [1, 'always'] -> Phải có khoảng trắng trong ngoặc: { user }.
+
+------------------------------------------------------------
+5. ESLINT VÀ JSX (TẦM QUAN TRỌNG)
+- BẮT LỖI ĐUÔI FILE: Quy tắc react/jsx-filename-extension sẽ ép bạn dùng đuôi .jsx cho file chứa React Component.
+- BẮT LỖI CÚ PHÁP JSX: 
+  + Quên đóng thẻ: <img /> thay vì <img>.
+  + Sai thuộc tính: className thay vì class.
+- KẾT QUẢ: ESLint đóng vai trò "người biên tập" gạch chân lỗi ngay trong VS Code giúp bạn sửa trước khi chạy.
+
+------------------------------------------------------------
+6. TÓM TẮT QUY TRÌNH LÀM VIỆC
+1. VIẾT CODE: Sử dụng file .jsx.
+2. ESLINT QUÉT: Đọc file cấu hình để kiểm tra luật lệ.
+3. THÔNG BÁO: Gạch chân màu ĐỎ/VÀNG ngay trong Editor để lập trình viên sửa lỗi.
+============================================================
+
+1. Môi trường và Phiên bản (env & parserOptions)
+
+    env: Khai báo các môi trường mà code sẽ chạy.
+
+        browser: true: Cho phép sử dụng các biến toàn cục của trình duyệt (như window, document).
+
+        es2020: true: Hỗ trợ các tính năng mới của JavaScript phiên bản ES2020.
+
+        node: true: Cho phép các biến toàn cục của Node.js (như module.exports, process) để không bị báo lỗi "undefined".
+
+    parserOptions: Thiết lập cách ESLint đọc code.
+
+        ecmaVersion: 'latest': Sử dụng cú pháp JavaScript mới nhất hiện có.
+
+        sourceType: 'module': Cho phép sử dụng lệnh import và export (ES Modules).
+
+2. Bộ quy tắc mở rộng (extends)
+
+Đây là các gói quy tắc có sẵn mà bạn thừa hưởng:
+
+    eslint:recommended: Các quy tắc cơ bản giúp phát hiện lỗi phổ biến trong JavaScript.
+
+    plugin:react/recommended: Các quy tắc tiêu chuẩn cho React.
+
+    plugin:react/jsx-runtime: Cấu hình cho React phiên bản 17+ (không cần import React trong mọi file JSX).
+
+    plugin:react-hooks/recommended: Kiểm tra các quy tắc nghiêm ngặt của React Hooks (ví dụ: không gọi Hook trong vòng lặp).
+
+3. Cài đặt và Plugin (settings & plugins)
+
+    settings: Tự động phát hiện phiên bản React để áp dụng quy tắc phù hợp (ở đây cố định là 18.2).
+
+    plugins: Khai báo các thư viện bổ sung để ESLint hiểu các cú pháp đặc thù của React, React Hooks và React Refresh (HMR).
+
+4. Các quy tắc chi tiết (rules)
+
+Quy tắc thường có 3 mức độ: 0 (Tắt), 1 hoặc 'warn' (Cảnh báo vàng), 2 hoặc 'error' (Lỗi đỏ - không cho chạy build).
+
+Quy tắc React & Hooks:
+
+    react-refresh/only-export-components: Cảnh báo nếu một file chứa Component lại export thêm các biến khác (để tính năng Hot Reload hoạt động chuẩn).
+
+    react-hooks/rules-of-hooks: Báo lỗi nếu vi phạm quy tắc Hook (ví dụ gọi Hook sai chỗ).
+
+    react/prop-types: 0 (Tắt) yêu cầu kiểm tra kiểu dữ liệu của props (thường tắt nếu dùng TypeScript hoặc không muốn quá khắt khe).
+
+Quy tắc Format (Làm đẹp code):
+
+    indent: ['warn', 2]: Yêu cầu thụt lề đúng 2 dấu cách.
+
+    semi: [1, 'never']: Cảnh báo nếu bạn sử dụng dấu chấm phẩy ; (quy tắc này yêu cầu không dùng chấm phẩy).
+
+    quotes: ['error', 'single']: Bắt buộc sử dụng nháy đơn ' ', dùng nháy đôi sẽ báo lỗi đỏ.
+
+    object-curly-spacing: [1, 'always']: Yêu cầu có khoảng trắng trong ngoặc nhọn, ví dụ: { user } thay vì {user}.
+
+    no-console: 1: Cảnh báo nếu bạn lạm dụng console.log trong code sản phẩm.
+
+    no-trailing-spaces: 1: Không cho phép có khoảng trắng dư thừa ở cuối dòng.
+
+    arrow-spacing: 1: Yêu cầu có khoảng trắng xung quanh mũi tên hàm () => {}.
