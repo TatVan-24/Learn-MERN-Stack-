@@ -20,7 +20,8 @@ import Select from '@mui/material/Select'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeOutLinedIcon from '@mui/icons-material/DarkModeOutlined'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
-
+import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
@@ -49,47 +50,21 @@ function ModeSelect() {
   );
 }
 
-
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme()
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const prefersLightMode = useMediaQuery('(prefers-color-scheme: light)')
-
-  console.log('prefersDarkMode:', prefersDarkMode)
-  console.log('prefersLightMode:', prefersLightMode)
-
-  return (
-    <Button
-      onClick={() => {
-        setMode(mode === 'light' ? 'dark' : 'light')
-      }}
-    >
-      {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>
-  )
-}
-
-
 function App() {
   // const [count, setCount] = useState(0);
 
   return (
-    <>
-      <ModeSelect/>
-      <br></br>
-      <ModeToggle />  
-      <br></br>
-      <Typography variant="body2" color="text.secondary">test typography</Typography>
-      <Button variant="contained">Hello world</Button>
-      <Button variant="text">text</Button>
-      <Button variant="outlined">Out Lined</Button>
-      <br />
-      <AccessAlarmIcon />
-      <ThreeDRotation />
-      <br />
-      <HomeIcon color="primary" />
-      <HomeIcon color="secondary" />
-    </>
+    <Container disableGutters maxWidth = {false} sx = {{height : '100vh', backgroundColor: 'primary.main'}}>
+      <Box sx = {{ backgroundColor: 'primary.light',  width: '100%',  height: (theme) => theme.sxCustom.appBarHeight, display: 'flex', alignItem:'Center'}}>
+         <ModeSelect />
+         </Box>
+      <Box sx = {{ backgroundColor: 'primary.light',  width: '100%',  height: (theme) => theme.sxCustom.boardBarHeight, display: 'flex', alignItem:'Center'}}>
+          Board Bar
+      </Box>
+      <Box sx = {{ backgroundColor: 'primary.light',  width: '100%',  height: (theme) => `calc(100vh - ${theme.sxCustom.appBarHeight} - ${theme.sxCustom.boardBarHeight})`, display: 'flex', alignItem:'Center'}}>
+          Board Contents
+      </Box>
+    </Container>
   );
 }
 
