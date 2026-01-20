@@ -1,6 +1,6 @@
 import { Container } from '@mui/material'
 import { Box } from '@mui/material'
-import AppBar from '../../components/AppBar/index.jsx'
+import AppBar from '~/components/AppBar/index.jsx'
 import BoardBar from './BoardBar/index.jsx'
 import BoardContent from './BoardContent/index.jsx'
 
