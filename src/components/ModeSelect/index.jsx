@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   useColorScheme,
 } from '@mui/material/styles'
@@ -14,10 +13,11 @@ import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
 
+  if(!mode) return null
   const handleChange = (event) => {
     const selectedMode = event.target.value
     console.log('selectedMode:', selectedMode)
-    setMode(selectedMode)
+    setMode(selectedMode || 'light')
   };
 
   return (
